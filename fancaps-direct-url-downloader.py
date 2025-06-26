@@ -1,5 +1,5 @@
 # Fancaps Direct URL Downloader
-# By citronlegacy:
+# By CitronLegacy:
 # https://github.com/citronlegacy/fancaps-direct-url-downloader
 #
 # This script downloads a list of direct image URLs from Fancaps.
@@ -12,6 +12,7 @@
 #   - Run the script.
 
 import os
+import time
 import concurrent.futures
 import urllib.request
 
@@ -28,9 +29,13 @@ https://cdni.fancaps.net/file/fancaps-movieimages/4839642.jpg
 https://cdni.fancaps.net/file/fancaps-movieimages/4839650.jpg
 """
 
+
 # Output folder for downloaded images
-OUTPUT_FOLDER = "./downloads/test3"
+OUTPUT_FOLDER = "./downloads"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+# Pause configuration
+PAUSE_EVERY_N = 3  # Number of downloads after which to pause for 1 second - You can probably download more than 3 at once but 3 is safe. Don't overload Fancaps.
 
 # -------------------------
 # Parse URLs
@@ -67,10 +72,19 @@ def download_file(url):
         print(f"❌ Error downloading {url}: {e}")
 
 # -------------------------
-# Run downloads in parallel
+# Run downloads with optional pauses
 # -------------------------
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-    executor.map(download_file, image_urls)
+def download_all_with_pauses(urls):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        futures = []
+        for i, url in enumerate(urls):
+            futures.append(executor.submit(download_file, url))
+            if (i + 1) % PAUSE_EVERY_N == 0:
+                print(f"\nℹ️  Pausing for 1 second every {PAUSE_EVERY_N} downloads...\n")
+                time.sleep(1)  # Pause for 1 second after every PAUSE_EVERY_N downloads
+        concurrent.futures.wait(futures)
+
+download_all_with_pauses(image_urls)
 
 print("🎉 Done downloading all images.")
