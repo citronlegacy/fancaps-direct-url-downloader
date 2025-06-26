@@ -15,6 +15,11 @@ This tool does **not** perform bulk scraping — instead, it precisely downloads
 
 ---
 
+## Open in Colab
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/citronlegacy/fancaps-direct-url-downloader/blob/main/fancaps_direct_url_downloader_COLAB.ipynb)
+
+
 ## Usage
 
 1. Open the script in Google Colab or your favorite Python environment.  
