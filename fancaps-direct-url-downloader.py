@@ -1,4 +1,6 @@
 # Fancaps Direct URL Downloader
+# By citronlegacy:
+# https://github.com/citronlegacy/fancaps-direct-url-downloader
 #
 # This script downloads a list of direct image URLs from Fancaps.
 # Inspired by KitsunekoFi's fancaps-dl (https://github.com/KitsunekoFi/fancaps-dl),
